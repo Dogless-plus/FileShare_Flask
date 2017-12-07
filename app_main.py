@@ -6,8 +6,8 @@ from utils import get_file_create_time,get_md5,get_filesize,get_foldersize,sort_
 
 
 app = Flask(__name__,template_folder="template")
-BASEDIR = path.dirname(__file__)
-STORAGE = sep.join([BASEDIR,"src"])
+BASEDIR = path.abspath(path.dirname(__file__))
+STORAGE = path.abspath(sep.join([BASEDIR,"src"]))
 code_map = {}   # code map for files
 
 try:
