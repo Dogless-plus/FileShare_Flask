@@ -2,7 +2,7 @@
 from flask import Flask,render_template,request,redirect,url_for,send_file,make_response
 from shutil import rmtree
 from os import path, sep,mkdir,listdir,remove
-from utils import get_file_create_time,get_md5,get_filesize,get_foldersize
+from utils import get_file_create_time,get_md5,get_filesize,get_foldersize,sort_by_time
 
 
 app = Flask(__name__,template_folder="template")
@@ -26,6 +26,7 @@ def home():
     global code_map
     code_map=dict(zip(codes,files))
     times = [get_file_create_time(sep.join([STORAGE,f])) for f in files]
+    codes, files, filesizes, times = sort_by_time(codes,files,filesizes,times)
     return render_template("home.html",
                            nfile=nfile,
                            memory=memory,
@@ -60,11 +61,15 @@ def download_file(filename):
 @app.route("/delete/<filename>/",methods=["GET",])
 def delete_file(filename):
     filename = code_map[filename]
-
-    remove(sep.join([STORAGE,filename]))
-
-    # print("unable to delete %s"%filename.encode().decode('latin-1'))
+    try:
+        remove(sep.join([STORAGE,filename]))
+    except:
+        print("unable to delete %s"%filename.encode().decode('latin-1'))
     return redirect(url_for('home'))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    print(BASEDIR)
+    print(STORAGE)
+    app.run(host="0.0.0.0",
+            port=10086,
+            threaded=True,)

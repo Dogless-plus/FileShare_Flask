@@ -2,6 +2,7 @@ import time
 from hashlib import md5
 import os
 from os import path,listdir,sep
+import pandas as pd
 def beautify_time(timestamp):
     timeStruct = time.localtime(timestamp)
     return time.strftime('%Y-%m-%d %H:%M:%S',timeStruct)
@@ -26,3 +27,9 @@ def get_filesize(filename):
 def get_foldersize(foldername):
     size = sum(path.getsize(sep.join([path.abspath(foldername),f])) for f in listdir(foldername))
     return sizeof_fmt(size)
+
+def sort_by_time(codes,files,filesizes,times):
+    df = pd.DataFrame(list(zip(codes,files,filesizes,times)),columns=["codes","files","filesizes","times"])
+    df = df.sort_values("times",axis=0,ascending=False)
+    codes, files, filesizes, times = list(df["codes"]),list(df["files"]),list(df["filesizes"]),list(df["times"])
+    return codes,files,filesizes,times

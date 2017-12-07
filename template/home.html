@@ -78,7 +78,9 @@
             <b >TOTAL Files: {{nfile}} &nbsp;&nbsp; ||  &nbsp;&nbsp;  Memory: {{memory}}&nbsp; /&nbsp; 8.0 GB </b>
         </th>
         <th style="text-align:right;">
-            <button><a href="/delete_all?<?=Date('U')?>"> DELETE ALL FILES</a></button>
+            <input type="button" onclick="window.location.href='/delete_all?<?=Date(\'U\')?>'"
+                   value=" DELETE ALL FILES">
+            <!--<button><a href="/delete_all?<?=Date('U')?>"> DELETE ALL FILES</a></button>-->
         </th>
     </tr>
     </thead>
@@ -108,8 +110,14 @@
         <td style="text-align:center;">{{item[2]}}</td>
         <td style="text-align:center;">{{item[3]}}</td>
         <td style="text-align:center;">
-            <button><a href="/download/{{item[0]}}/">Download</a></button>&nbsp;&nbsp;
-            <button><a href="/delete/{{item[0]}}/">Delete</a></button>
+            <input type="button" onclick="window.location.href='/download/{{item[0]}}/'"
+                   value="Download">
+            &nbsp;&nbsp;
+            <input type="button" onclick="window.location.href='/delete/{{item[0]}}/'"
+                   value="Delete">
+
+            <!--<button><a href="/download/{{item[0]}}/">Download</a></button>&nbsp;&nbsp;-->
+            <!--<button><a href="/delete/{{item[0]}}/">Delete</a></button>-->
         </td>
     </tr>
     {% endfor %}
