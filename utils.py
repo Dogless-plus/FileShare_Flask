@@ -1,7 +1,7 @@
 import time
 from hashlib import md5
 import os
-from os import path
+from os import path,listdir,sep
 def beautify_time(timestamp):
     timeStruct = time.localtime(timestamp)
     return time.strftime('%Y-%m-%d %H:%M:%S',timeStruct)
@@ -22,3 +22,7 @@ def sizeof_fmt(num, suffix='B'):
 
 def get_filesize(filename):
     return sizeof_fmt(path.getsize(filename))
+
+def get_foldersize(foldername):
+    size = sum(path.getsize(sep.join([path.abspath(foldername),f])) for f in listdir(foldername))
+    return sizeof_fmt(size)

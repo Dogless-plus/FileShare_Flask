@@ -9,13 +9,28 @@
 </head>
 <body>
 <h2>XS Share File</h2>
-<hr style="height:5px;border:none;border-top:5px ridge green;" />
-<form  method="POST" enctype="multipart/form-data">
-    <input type="file" id="file" name="file" value="Choose File">
-    <input type="submit" value="UPLOAD" href="/?<?=Date('U')?>">
+<hr style="height:5px;border:none;border-top:5px ridge green;"/>
+
+
+<form method="POST" enctype="multipart/form-data">
+    <table class="table table-hover">
+        <colgroup>
+            <col span="1" style="background-color:yellow" width="10%">
+            <col span="1" style="background-color:greenyellow" width="60%">
+            <col style="background-color:palevioletred" width="30%">
+        </colgroup>
+        <thead>
+        <tr>
+            <th> Upload File</th>
+            <th style="text-align:center;"><input type="file" id="file" name="file" value="Choose File"></th>
+            <th style="text-align:right;"><input type="submit" value="UPLOAD" href="/?<?=Date('U')?>"></th>
+        </tr>
+        </thead>
+    </table>
 </form>
 <div class="progress" style="display: none;">
-    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+         style="width: 0%;">
         0%
     </div>
 </div>
@@ -36,7 +51,7 @@
                 return xhr;
             },
             type: 'POST',
-            url:"/upload",
+            url: "/upload",
             cache: false,
             data: formData,
             processData: false,
@@ -49,35 +64,53 @@
         });
     });
 </script>
-<hr>
-<button><a href="/delete_all?<?=Date('U')?>"> DELETE ALL FILES</a></button>
-<hr>
 
-<div style="color:#2a7802"><h3 ><b>TOTAL: {{nfile}}</b></h3></div>
+<table class="table table-hover">
+    <colgroup>
+        <col span="1" style="background-color:yellow" width="10%">
+        <col style="background-color:lightseagreen" width="75%">
+        <col style="background-color:palevioletred" width="15%" >
+    </colgroup>
+    <thead>
+    <tr>
+        <th> Global Option</th>
+        <th style="text-align: center">
+            <b >TOTAL Files: {{nfile}} &nbsp;&nbsp; ||  &nbsp;&nbsp;  Memory: {{memory}}&nbsp; /&nbsp; 8.0 GB </b>
+        </th>
+        <th style="text-align:right;">
+            <button><a href="/delete_all?<?=Date('U')?>"> DELETE ALL FILES</a></button>
+        </th>
+    </tr>
+    </thead>
+</table>
+
+
 <table class="table table-hover">
     <colgroup>
         <col span="1" style="background-color:greenyellow" width="60%">
-    <col span="1" style="background-color:lawngreen" width="10%"  >
-    <col span="1" style="background-color:mediumspringgreen" width="15%">
-    <col style="background-color:palevioletred" width="15%" >
-  </colgroup>
+        <col span="1" style="background-color:lawngreen" width="10%">
+        <col span="1" style="background-color:mediumspringgreen" width="15%">
+        <col style="background-color:palevioletred" width="15%">
+    </colgroup>
     <thead>
     <tr>
-        <th  style="text-align:center;">FileName</th>
-        <th  style="text-align:center;">FileSize</th>
-        <th  style="text-align:center;">TimeStamp</th>
-        <th  style="text-align:center;">Op</th>
+        <th style="text-align:center;">FileName</th>
+        <th style="text-align:center;">FileSize</th>
+        <th style="text-align:center;">TimeStamp</th>
+        <th style="text-align:center;">Op</th>
     </tr>
     </thead>
 
     <tbody>
     {% for item in items %}
     <tr class="success">
-        <td  style="text-align:center;"><a href="/download/{{item[0]}}/">{{item[1]}}</a> </td>
-        <td  style="text-align:center;">{{item[2]}}</td>
-        <td  style="text-align:center;">{{item[3]}}</td>
-        <td  style="text-align:center;"><button><a href="/download/{{item[0]}}/">Download</a></button>&nbsp;&nbsp;
-            <button> <a href="/delete/{{item[0]}}/">Delete</a></button></td>
+        <td style="text-align:center;"><a href="/download/{{item[0]}}/">{{item[1]}}</a></td>
+        <td style="text-align:center;">{{item[2]}}</td>
+        <td style="text-align:center;">{{item[3]}}</td>
+        <td style="text-align:center;">
+            <button><a href="/download/{{item[0]}}/">Download</a></button>&nbsp;&nbsp;
+            <button><a href="/delete/{{item[0]}}/">Delete</a></button>
+        </td>
     </tr>
     {% endfor %}
     </tbody>

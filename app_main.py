@@ -2,7 +2,7 @@
 from flask import Flask,render_template,request,redirect,url_for,send_file,make_response
 from shutil import rmtree
 from os import path, sep,mkdir,listdir,remove
-from utils import get_file_create_time,get_md5,get_filesize
+from utils import get_file_create_time,get_md5,get_filesize,get_foldersize
 
 
 app = Flask(__name__,template_folder="template")
@@ -16,18 +16,19 @@ except:
     pass
 
 
-# todo:sort by time
 @app.route('/', methods=['GET',])
 def home():
     files = listdir(STORAGE)
     nfile = len(files)
     codes = [get_md5(f) for f in files]
     filesizes =[get_filesize(sep.join([STORAGE,f])) for f in files]
+    memory = get_foldersize(STORAGE)
     global code_map
     code_map=dict(zip(codes,files))
     times = [get_file_create_time(sep.join([STORAGE,f])) for f in files]
     return render_template("home.html",
                            nfile=nfile,
+                           memory=memory,
                            items=zip(codes,files,filesizes,times),)
 
 @app.route('/upload', methods=['POST', 'GET'])
